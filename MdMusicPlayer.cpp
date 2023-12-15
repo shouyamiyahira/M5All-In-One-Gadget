@@ -12,7 +12,7 @@ AudioFileSourceID3* id3;
 File musicfolder;
 File entry;
 
-void MdMusicPlayer::init()
+void MdMusicPlayer::init() //音楽プレイヤーの初期化
 {
 
     SD.begin();
@@ -25,12 +25,12 @@ void MdMusicPlayer::init()
     }
 }
 
-char* MdMusicPlayer::getTitle()
+char* MdMusicPlayer::getTitle() //音楽ファイルのファイル名を表示する	
 {
     return (char*)entry.name();
 }
 
-void MdMusicPlayer::selectNextMusic()
+void MdMusicPlayer::selectNextMusic() //次の音楽ファイルを開く	
 {
     entry = musicfolder.openNextFile();
     if (!entry) {
@@ -40,7 +40,7 @@ void MdMusicPlayer::selectNextMusic()
     }
 }
 
-void MdMusicPlayer::prepareMP3()
+void MdMusicPlayer::prepareMP3() //音楽ファイルの再生に必要なインスタンスの生成とデコードを開始する	
 {
     file = new AudioFileSourceSD(entry.path());
     id3 = new AudioFileSourceID3(file);
@@ -51,17 +51,17 @@ void MdMusicPlayer::prepareMP3()
     mp3->begin(id3, out);
 }
 
-bool MdMusicPlayer::isRunningMP3()
+bool MdMusicPlayer::isRunningMP3() //音楽ファイルを再生中か確認する	
 {
     return mp3->isRunning();
 }
 
-bool MdMusicPlayer::playMP3()
+bool MdMusicPlayer::playMP3() //音楽ファイルを再生する	
 {
     return mp3->loop();
 }
 
-void MdMusicPlayer::stopMP3()
+void MdMusicPlayer::stopMP3() //音楽ファイルの再生を停止する	
 {
     mp3->stop();
 }
